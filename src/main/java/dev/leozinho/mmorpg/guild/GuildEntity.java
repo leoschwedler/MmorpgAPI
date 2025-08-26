@@ -21,6 +21,13 @@ public class GuildEntity {
     private String name;
     @Column(name = "description")
     private String description;
+    // =====================================
+    // RELACIONAMENTO ONE-TO-MANY COM CHARACTERS
+    // =====================================
     @OneToMany(mappedBy = "guild")
-    private List<CharacterEntity> characterEntities;
+    // Uma guilda pode ter vários personagens.
+    // O 'mappedBy = "guild"' indica que a propriedade 'guild' em CharacterEntity
+    // é quem "possui" o relacionamento no banco de dados.
+    // Ou seja, a tabela tb_character tem a coluna guild_id que referencia tb_guild.
+    private List<CharacterEntity> characters;
 }
