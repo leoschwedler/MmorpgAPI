@@ -15,7 +15,7 @@ public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
+    @Column(unique = true, name = "name")
     private String name;
     @Column(name = "type")
     private String type;
