@@ -19,8 +19,14 @@ public class ItemEntity {
     private String name;
     @Column(name = "type")
     private String type;
+    // =========================
+    // RELACIONAMENTO MANY-TO-ONE COM CHARACTER
+    // =========================
     @ManyToOne
+    // Muitos itens podem pertencer a um mesmo personagem.
+    // Cada item tem apenas um dono (CharacterEntity).
     @JoinColumn(name = "character_id")
+    // Define o nome da coluna no banco que será a chave estrangeira apontando para tb_character.
     private CharacterEntity character;
 
 }
