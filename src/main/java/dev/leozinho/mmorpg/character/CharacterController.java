@@ -1,15 +1,35 @@
 package dev.leozinho.mmorpg.character;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/characters")
 public class CharacterController {
 
-    @GetMapping("/boas_vindas")
-    public String boasVindas(){
-        return "bem vindo a sua primeira rota viado";
+
+    // Adicionar personagem (CREATE)
+    @PostMapping("/create")
+    public void createCharacter(){
+
+    }
+    // Procurar todos os personagens(READ)
+    @GetMapping("/all")
+    public void showAllCharacters(){
+
+    }
+    // Procurar personagem por id (READ)
+    @GetMapping("/showCharacterById")
+    public void showCharacterById(){
+
+    }
+    // Atualizar personagem (UPDATE)
+    @PutMapping("/updateCharacterById")
+    public void updateCharacterById(){
+
+    }
+    // Deletar personagem (DELETE)
+    @DeleteMapping("/deleteCharacterById")
+    public void deleteCharacterById(){
+
     }
 }
