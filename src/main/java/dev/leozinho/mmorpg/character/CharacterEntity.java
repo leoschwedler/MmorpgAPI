@@ -1,5 +1,6 @@
 package dev.leozinho.mmorpg.character;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.leozinho.mmorpg.guild.GuildEntity;
 import dev.leozinho.mmorpg.item.ItemEntity;
 import jakarta.persistence.*;
@@ -42,5 +43,6 @@ public class CharacterEntity {
     // Essa anotação diz que um personagem pode ter muitos itens.
     // O 'mappedBy' indica que o lado "dono" do relacionamento é a entidade ItemEntity,
     // que terá uma propriedade chamada 'character' apontando para este CharacterEntity.
+    @JsonIgnore
     private List<ItemEntity> items;
 }
