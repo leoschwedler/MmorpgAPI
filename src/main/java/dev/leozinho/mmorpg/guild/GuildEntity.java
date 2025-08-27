@@ -1,5 +1,6 @@
 package dev.leozinho.mmorpg.guild;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.leozinho.mmorpg.character.CharacterEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,6 @@ public class GuildEntity {
     // O 'mappedBy = "guild"' indica que a propriedade 'guild' em CharacterEntity
     // é quem "possui" o relacionamento no banco de dados.
     // Ou seja, a tabela tb_character tem a coluna guild_id que referencia tb_guild.
+    @JsonIgnore
     private List<CharacterEntity> characters;
 }
