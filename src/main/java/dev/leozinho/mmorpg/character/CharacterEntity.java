@@ -28,7 +28,7 @@ public class CharacterEntity {
     // =========================
     // RELACIONAMENTO MANY-TO-ONE
     // =========================
-    // Essa anotação diz que muitos personagens podem pertencer a uma guilda.
+    // Essa anotação diz que muitos personagens podem pertencer a uma guildchaa.
     // No banco de dados, isso cria uma coluna 'guild_id' na tabela 'tb_character'
     // que será a chave estrangeira apontando para a tabela 'tb_guild'.
     @ManyToOne

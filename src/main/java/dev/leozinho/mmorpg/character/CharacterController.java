@@ -16,22 +16,22 @@ public class CharacterController {
 
     // Adicionar personagem (CREATE)
     @PostMapping("/create")
-    public CharacterEntity createCharacter(@RequestBody CharacterEntity character){
+    public CharacterDTO createCharacter(@RequestBody CharacterDTO character){
         return service.createCharacter(character);
     }
     // Listar todos os personagens(READ)
     @GetMapping("/all")
-    public List<CharacterEntity> showAllCharacters(){
+    public List<CharacterDTO> showAllCharacters(){
       return service.showAllCharacters();
     }
     // Listar personagem por id (READ)
     @GetMapping("/showCharacterById/{id}")
-    public CharacterEntity showCharacterById(@PathVariable Long id){
+    public CharacterDTO showCharacterById(@PathVariable Long id){
       return service.showCharacterById(id);
     }
     // Atualizar personagem (UPDATE)
     @PutMapping("/updateCharacterById/{id}")
-    public CharacterEntity updateCharacterById(@PathVariable Long id,@RequestBody CharacterEntity character){
+    public CharacterDTO updateCharacterById(@PathVariable Long id,@RequestBody CharacterDTO character){
         return service.updateCharacterById(id, character);
     }
     // Deletar personagem (DELETE)
