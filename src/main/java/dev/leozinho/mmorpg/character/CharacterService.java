@@ -1,46 +1,51 @@
 package dev.leozinho.mmorpg.character;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CharacterService {
-    private CharacterRepository repository;
+    private final CharacterRepository repository;
+    private final CharacterMapper characterMapper;
 
-    public CharacterService(CharacterRepository repository) {
+    public CharacterService(CharacterRepository repository, CharacterMapper characterMapper) {
         this.repository = repository;
+        this.characterMapper = characterMapper;
     }
 
     // Adicionar personagem (CREATE)
-    public CharacterEntity createCharacter(CharacterEntity character){
-       return repository.save(character);
+    public CharacterDTO createCharacter(CharacterDTO characterDTO){
+        CharacterEntity character = characterMapper.map(characterDTO);
+        character = repository.save(character);
+        return characterMapper.map(character);
     }
 
     // Listar todos os personagens (READ)
-    public List<CharacterEntity> showAllCharacters(){
-        return repository.findAll();
+    public List<CharacterDTO> showAllCharacters(){
+        List<CharacterEntity> character = repository.findAll();
+        return character.stream()
+                .map(characterMapper::map)
+                .collect(Collectors.toList());
     }
 
     // Listar personagem por id (READ)
-    public CharacterEntity showCharacterById(Long id){
-         Optional<CharacterEntity> characterById = repository.findById(id);
-         return characterById.orElse(null);
+    public CharacterDTO showCharacterById(Long id){
+         Optional<CharacterEntity> character = repository.findById(id);
+        return character.map(characterMapper::map).orElse(null);
     }
 
     // Atualizar personagem (UPDATE)
-    public CharacterEntity updateCharacterById(Long id, CharacterEntity character){
-        if (repository.existsById(id)) {
-          character.setId(id);
-          return repository.save(character);
-        }else {
-          return  null;
+    public CharacterDTO updateCharacterById(Long id, CharacterDTO characterDTO){
+        Optional<CharacterEntity> character = repository.findById(id);
+        if (character.isPresent()){
+            CharacterEntity characterExist = characterMapper.map(characterDTO);
+            characterExist.setId(id);
+            CharacterEntity characterSaved = repository.save(characterExist);
+            return characterMapper.map(characterSaved);
         }
+        return null;
     }
 
     // Deletar personagem (DELETE)

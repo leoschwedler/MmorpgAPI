@@ -19,6 +19,8 @@ public class ItemEntity {
     private String name;
     @Column(name = "type")
     private String type;
+    @Column(name = "damage")
+    private int damage;
     // =========================
     // RELACIONAMENTO MANY-TO-ONE COM CHARACTER
     // =========================

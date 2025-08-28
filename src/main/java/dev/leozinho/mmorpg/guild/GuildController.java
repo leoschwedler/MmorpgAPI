@@ -16,22 +16,22 @@ public class GuildController {
 
     // Adicionar guilda (CREATE)
     @PostMapping("/create")
-    public GuildEntity createGuild(@RequestBody GuildEntity guild){
+    public GuildDTO createGuild(@RequestBody GuildDTO guild){
        return service.createGuild(guild);
     }
     // Procurar todas as guildas (READ)
     @GetMapping("/all")
-    public List<GuildEntity> showAllGuilds(){
+    public List<GuildDTO> showAllGuilds(){
         return service.showAllGuilds();
     }
     // Procurar guilda por id (READ)
     @GetMapping("/showGuildById/{id}")
-    public GuildEntity showGuildById(@PathVariable Long id){
+    public GuildDTO showGuildById(@PathVariable Long id){
         return service.showGuildById(id);
     }
     // Atualizar guilda por id (UPDATE)
     @PutMapping("/updateGuildById")
-    public GuildEntity updateGuildById(@PathVariable Long id, @RequestBody GuildEntity guild){
+    public GuildDTO updateGuildById(@PathVariable Long id, @RequestBody GuildDTO guild){
         return service.updateGuildById(id,guild);
     }
     // Deletar guilda por id (DELETE)

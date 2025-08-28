@@ -16,22 +16,22 @@ public class ItemController {
 
     // Adicionar item (CREATE)
     @PostMapping("/create")
-    public ItemEntity createItem(@RequestBody ItemEntity item){
+    public ItemDTO createItem(@RequestBody ItemDTO item){
         return service.createItem(item);
     }
     // Procurar todas os items (READ)
     @GetMapping("/all")
-    public List<ItemEntity> showAllItems(){
+    public List<ItemDTO> showAllItems(){
       return   service.showAllItems();
     }
     // Procurar items por id (READ)
     @GetMapping("/showItemdById")
-    public ItemEntity showItemById(@PathVariable Long id){
+    public ItemDTO showItemById(@PathVariable Long id){
         return service.showItemById(id);
     }
     // Atualizar item por id (UPDATE)
     @PutMapping("/updateItemById/{id}")
-    public ItemEntity updateItemById(@PathVariable Long id, @RequestBody ItemEntity item){
+    public ItemDTO updateItemById(@PathVariable Long id, @RequestBody ItemDTO item){
         return service.updateItemByid(id, item);
     }
     // Deletar item por id (DELETE)
