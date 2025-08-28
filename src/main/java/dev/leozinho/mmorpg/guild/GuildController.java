@@ -1,5 +1,7 @@
 package dev.leozinho.mmorpg.guild;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,35 +10,77 @@ import java.util.List;
 @RequestMapping("/guild")
 public class GuildController {
 
-    private GuildService service;
+    private final GuildService service;
 
     public GuildController(GuildService service) {
         this.service = service;
     }
 
-    // Adicionar guilda (CREATE)
+    // ================================
+    // CREATE - Criar nova guilda
+    // ================================
     @PostMapping("/create")
-    public GuildDTO createGuild(@RequestBody GuildDTO guild){
-       return service.createGuild(guild);
+    public ResponseEntity<?> createGuild(@RequestBody GuildDTO guild) {
+        GuildDTO created = service.createGuild(guild);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Guild criada com sucesso: " + created.getName() +
+                        " (ID: " + created.getId() + ")");
     }
-    // Procurar todas as guildas (READ)
+
+    // ================================
+    // READ - Listar todas as guildas
+    // ================================
     @GetMapping("/all")
-    public List<GuildDTO> showAllGuilds(){
-        return service.showAllGuilds();
+    public ResponseEntity<?> showAllGuilds() {
+        List<GuildDTO> guilds = service.showAllGuilds();
+        if (guilds.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        return ResponseEntity.ok(guilds);
     }
-    // Procurar guilda por id (READ)
+
+    // ================================
+    // READ - Buscar guilda por ID
+    // ================================
     @GetMapping("/showGuildById/{id}")
-    public GuildDTO showGuildById(@PathVariable Long id){
-        return service.showGuildById(id);
+    public ResponseEntity<?> showGuildById(@PathVariable Long id) {
+        GuildDTO guild = service.showGuildById(id);
+        if (guild != null) {
+            return ResponseEntity.ok(guild);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Guild com o ID: " + id + " não foi encontrada");
+        }
     }
-    // Atualizar guilda por id (UPDATE)
-    @PutMapping("/updateGuildById")
-    public GuildDTO updateGuildById(@PathVariable Long id, @RequestBody GuildDTO guild){
-        return service.updateGuildById(id,guild);
+
+    // ================================
+    // UPDATE - Atualizar guilda por ID
+    // ================================
+    @PutMapping("/updateGuildById/{id}")
+    public ResponseEntity<?> updateGuildById(@PathVariable Long id, @RequestBody GuildDTO guild) {
+        GuildDTO guildExist = service.showGuildById(id);
+        if (guildExist != null) {
+         GuildDTO  guildDTO = service.updateGuildById(id, guild);
+            return ResponseEntity.ok(guildDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Erro ao encontrar a guild com o ID: " + id);
+        }
     }
-    // Deletar guilda por id (DELETE)
+
+    // ================================
+    // DELETE - Deletar guilda por ID
+    // ================================
     @DeleteMapping("/deleteGuildById/{id}")
-    public void deleteGuildById(@PathVariable Long id){
-        service.deleteGuildById(id);
+    public ResponseEntity<?> deleteGuildById(@PathVariable Long id) {
+        GuildDTO guild = service.showGuildById(id);
+        if (guild != null)  {
+            service.deleteGuildById(id);
+            return ResponseEntity.ok("Guild com o ID: " + id + " foi deletada com sucesso");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Guild com o ID: " + id + " não encontrada");
+        }
     }
 }
